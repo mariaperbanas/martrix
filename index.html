@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Platform informasi dan pemesanan tiket acara kampus Perbanas Institute.">
+  <title>Perbanas Event — Platform Acara Kampus Perbanas Institute</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Icons & Stylesheet -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+
+  <!-- JavaScript -->
+  <script src="script.js" defer></script>
+</head>
+<body>
+
+  <!-- Site Header -->
+  <header class="site-header">
+    <div class="wrap nav">
+      <a class="logo" href="index.html">
+        <i class="fa-solid fa-ticket"></i>
+        <span>Perbanas Event</span>
+      </a>
+      <nav class="navlinks" aria-label="Navigasi utama">
+        <a href="#events">Jelajahi Acara</a>
+        <a href="#categories">Kategori</a>
+        <a href="#organizer">Untuk Organizer</a>
+        <a href="#" id="openFaqBtn">Cara Pesan</a>
+      </nav>
+      <div class="navactions">
+        <button class="btn btn-light" id="openAuthBtn" type="button">
+          <i class="fa-solid fa-right-to-bracket"></i> Masuk / Daftar
+        </button>
+        <button class="btn btn-light" id="openTicketsBtn" type="button">
+          <i class="fa-solid fa-ticket"></i> Tiket Saya <span id="ticketCount" class="ticket-count"></span>
+        </button>
+        <button class="btn btn-primary" id="openOrganizerBtn" type="button">
+          <i class="fa-solid fa-plus"></i> Buat Acara
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="wrap hero-grid">
+        <div class="hero-copy">
+          <div class="eyebrow">
+            <i class="fa-solid fa-sparkles"></i> Pusat Acara Kampus Perbanas
+          </div>
+          <h1>Satu tempat untuk semua acara seru di <span>Perbanas Institute.</span></h1>
+          <p>Temukan seminar, workshop, kompetisi, dan kegiatan komunitas mahasiswa. Lihat detail acara dan pesan tiket dengan mudah.</p>
+          <a class="btn btn-hero" href="#events">
+            Jelajahi Acara <i class="fa-solid fa-arrow-right"></i>
+          </a>
+          <div class="hero-stats">
+            <div><strong id="heroEventCount">8+</strong><span>Acara pilihan</span></div>
+            <div><strong>4</strong><span>Kategori kegiatan</span></div>
+            <div><strong>#TemuDiSini</strong><span>Belajar · Berjejaring · Berkarya</span></div>
+          </div>
+        </div>
+        <div class="hero-visual">
+          <img src="image/tampilan.awal.jpg" alt="Kegiatan seminar di Perbanas Institute"
+               onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=1200&q=85';">
+          <div class="hero-mini">
+            <div><strong>Ruang untuk berkembang</strong><span>Belajar • Berjejaring • Berkarya</span></div>
+            <div class="tagline">#TemuDiSini</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Search & Filter Bar -->
+    <div class="wrap search-wrap">
+      <div class="searchbar">
+        <label class="field">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input id="searchInput" type="search" placeholder="Cari Public Lecture, Workshop, SNAP..." aria-label="Cari acara">
+        </label>
+        <label class="field">
+          <i class="fa-solid fa-layer-group"></i>
+          <select id="categoryFilter" aria-label="Filter kategori">
+            <option value="Semua">Semua kategori</option>
+            <option value="Seminar">Seminar</option>
+            <option value="Workshop">Workshop</option>
+            <option value="Kompetisi">Kompetisi</option>
+            <option value="Komunitas">Komunitas</option>
+          </select>
+        </label>
+        <label class="field">
+          <i class="fa-solid fa-calendar-days"></i>
+          <select id="dateFilter" aria-label="Filter waktu">
+            <option value="">Semua waktu</option>
+            <option value="upcoming">Acara mendatang</option>
+            <option value="past">Acara yang telah lewat</option>
+          </select>
+        </label>
+        <button class="btn btn-primary" id="searchBtn" type="button">
+          <i class="fa-solid fa-magnifying-glass"></i> Cari
+        </button>
+      </div>
+    </div>
+
+    <!-- Events Section -->
+    <section class="section wrap" id="events">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow">AGENDA KAMPUS</span>
+          <h2>Jelajahi acara pilihan</h2>
+          <p>Pilih acara, amankan tiket, dan mulai pengalaman barumu.</p>
+        </div>
+        <span id="eventCount" class="event-count" aria-live="polite"></span>
+      </div>
+
+      <!-- Categories Filter Badges -->
+      <div class="categories" id="categories">
+        <button class="cat active" data-category="Semua" type="button">
+          <span class="cat-icon"><i class="fa-solid fa-shapes"></i></span>
+          <span><strong>Semua Acara</strong><small>Jelajahi semuanya</small></span>
+        </button>
+        <button class="cat" data-category="Seminar" type="button">
+          <span class="cat-icon"><i class="fa-solid fa-microphone-lines"></i></span>
+          <span><strong>Seminar</strong><small>Wawasan & inspirasi</small></span>
+        </button>
+        <button class="cat" data-category="Workshop" type="button">
+          <span class="cat-icon"><i class="fa-solid fa-laptop-code"></i></span>
+          <span><strong>Workshop</strong><small>Belajar keterampilan</small></span>
+        </button>
+        <button class="cat" data-category="Kompetisi" type="button">
+          <span class="cat-icon"><i class="fa-solid fa-trophy"></i></span>
+          <span><strong>Kompetisi</strong><small>Tunjukkan kemampuan</small></span>
+        </button>
+        <button class="cat" data-category="Komunitas" type="button">
+          <span class="cat-icon"><i class="fa-solid fa-users"></i></span>
+          <span><strong>Komunitas</strong><small>Berjejaring bersama</small></span>
+        </button>
+      </div>
+
+      <!-- Grid & Empty State -->
+      <div class="events" id="eventGrid"></div>
+      
+      <div id="emptyState" class="empty-state" hidden>
+        <i class="fa-regular fa-calendar-xmark"></i>
+        <h3>Acara tidak ditemukan</h3>
+        <p>Coba ubah kata kunci atau filter kategori.</p>
+        <button class="btn btn-light" id="resetFilterBtn" type="button">Reset Filter</button>
+      </div>
+    </section>
+
+    <!-- Organizer Banner -->
+    <section class="wrap section" id="organizer">
+      <div class="banner">
+        <div>
+          <span class="eyebrow">UNTUK PENYELENGGARA</span>
+          <h2>Punya acara yang ingin dibagikan?</h2>
+          <p>Publikasikan acara organisasi, himpunan mahasiswa, UKM, atau komunitas kampus Perbanas Institute.</p>
+        </div>
+        <i class="fa-solid fa-calendar-check banner-icon"></i>
+        <button class="btn btn-primary" id="createEventBtn" type="button">
+          Mulai Buat Acara <i class="fa-solid fa-arrow-right"></i>
+        </button>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="wrap footer-row">
+      <div>
+        <a class="logo footer-logo" href="index.html">
+          <i class="fa-solid fa-ticket"></i>
+          <span>Perbanas Event</span>
+        </a>
+        <p>Platform informasi dan pemesanan tiket acara kampus Perbanas Institute, mulai dari seminar akademik hingga kompetisi dan kegiatan komunitas.</p>
+      </div>
+      <div>
+        <strong>Jelajahi</strong>
+        <div class="footer-links">
+          <a href="#events">Seminar</a>
+          <a href="#events">Workshop</a>
+          <a href="#events">Komunitas</a>
+        </div>
+      </div>
+      <div>
+        <strong>Bantuan</strong>
+        <div class="footer-links">
+          <a href="mailto:bantuan@perbanasevent.id">Hubungi Panitia</a>
+          <a href="#organizer">Untuk Penyelenggara Kampus</a>
+        </div>
+      </div>
+    </div>
+    <div class="wrap copyright">
+      © 2026 Perbanas Event — Kelompok 12 Martrix (Perbanas Institute)
+    </div>
+  </footer>
+
+  <!-- Modals -->
+  <!-- Modal Detail Acara -->
+  <div class="overlay" id="detailModal" role="dialog" aria-modal="true" aria-labelledby="detailModalTitle" hidden>
+    <div class="modal">
+      <div class="modal-head">
+        <h2 id="detailModalTitle">Detail Acara</h2>
+        <button class="close" data-close="detailModal" aria-label="Tutup">&times;</button>
+      </div>
+      <div class="modal-content" id="detailContent"></div>
+    </div>
+  </div>
+
+  <!-- Modal Checkout -->
+  <div class="overlay" id="checkoutModal" role="dialog" aria-modal="true" aria-labelledby="checkoutModalTitle" hidden>
+    <div class="modal">
+      <div class="modal-head">
+        <h2 id="checkoutModalTitle">Pesan Tiket Acara</h2>
+        <button class="close" data-close="checkoutModal" aria-label="Tutup">&times;</button>
+      </div>
+      <div class="modal-content" id="checkoutContent"></div>
+    </div>
+  </div>
+
+  <!-- Modal Tiket Saya -->
+  <div class="overlay" id="ticketsModal" role="dialog" aria-modal="true" aria-labelledby="ticketsModalTitle" hidden>
+    <div class="modal">
+      <div class="modal-head">
+        <h2 id="ticketsModalTitle"><i class="fa-solid fa-ticket"></i> Tiket Saya</h2>
+        <button class="close" data-close="ticketsModal" aria-label="Tutup">&times;</button>
+      </div>
+      <div class="modal-content" id="ticketsContent"></div>
+    </div>
+  </div>
+
+  <!-- Modal Organizer Form -->
+  <div class="overlay" id="organizerModal" role="dialog" aria-modal="true" aria-labelledby="organizerModalTitle" hidden>
+    <div class="modal">
+      <div class="modal-head">
+        <h2 id="organizerModalTitle">Buat Acara Baru</h2>
+        <button class="close" data-close="organizerModal" aria-label="Tutup">&times;</button>
+      </div>
+      <div class="modal-content">
+        <p class="form-intro">Isi detail acara untuk menambahkannya ke daftar acara Perbanas Event.</p>
+        <form id="organizerForm">
+          <label for="newTitle">Nama acara</label>
+          <input id="newTitle" required maxlength="100" placeholder="Contoh: Seminar Karier dan Dunia Kerja">
+
+          <label for="newCategory">Kategori</label>
+          <select id="newCategory">
+            <option>Seminar</option>
+            <option>Workshop</option>
+            <option>Kompetisi</option>
+            <option>Komunitas</option>
+          </select>
+
+          <label for="newDate">Tanggal</label>
+          <input id="newDate" type="date" required>
+
+          <label for="newTime">Waktu</label>
+          <input id="newTime" required placeholder="09.00–12.00 WIB">
+
+          <label for="newLocation">Lokasi / platform</label>
+          <input id="newLocation" required placeholder="Kampus Perbanas Institute / Online">
+
+          <label for="newPrice">Harga tiket (Rp, isi 0 jika gratis)</label>
+          <input id="newPrice" type="number" min="0" required value="0">
+
+          <label for="newCapacity">Kapasitas peserta</label>
+          <input id="newCapacity" type="number" min="1" required value="100">
+
+          <label for="newDescription">Deskripsi singkat</label>
+          <textarea id="newDescription" rows="3" required maxlength="500" placeholder="Apa yang akan peserta dapatkan?"></textarea>
+
+          <label for="newImage">URL poster (opsional)</label>
+          <input id="newImage" type="url" placeholder="https://...">
+
+          <button class="btn btn-primary full-width" type="submit">
+            <i class="fa-solid fa-plus"></i> Tambahkan Acara
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="overlay" id="authModal" role="dialog" aria-modal="true" aria-labelledby="authModalTitle" hidden>
+    <div class="modal">
+      <div class="modal-head">
+        <h2 id="authModalTitle">Masuk ke Perbanas Event</h2>
+        <button class="close" data-close="authModal" aria-label="Tutup">&times;</button>
+      </div>
+      <div class="modal-content">
+        <p class="form-intro">Gunakan akun mahasiswa atau registrasi untuk melanjutkan.</p>
+        <form id="authForm">
+          <label for="authEmail">Email Perbanas / Umum</label>
+          <input id="authEmail" type="email" required placeholder="nama@perbanas.id">
+
+          <label for="authPassword">Kata Sandi</label>
+          <input id="authPassword" type="password" required placeholder="••••••••">
+
+          <button class="btn btn-primary full-width" type="submit" style="margin-top: 15px;">
+            <i class="fa-solid fa-right-to-bracket"></i> Masuk
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+<!-- Modal FAQ / Panduan Pemesanan -->
+  <div class="overlay" id="faqModal" role="dialog" aria-modal="true" aria-labelledby="faqModalTitle" hidden>
+    <div class="modal">
+      <div class="modal-head">
+        <h2 id="faqModalTitle"><i class="fa-solid fa-circle-question"></i> Panduan Pemesanan Tiket</h2>
+        <button class="close" data-close="faqModal" aria-label="Tutup">&times;</button>
+      </div>
+      <div class="modal-content">
+        <div style="display: flex; flex-direction: column; gap: 15px; margin-top: 5px;">
+          <div style="display: flex; gap: 12px; align-items: flex-start;">
+            <span style="background: #eeeaff; color: #5746c8; width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; font-weight: 800; flex-shrink: 0;">1</span>
+            <div>
+              <strong style="display: block; font-size: 13px;">Pilih Acara Kampus</strong>
+              <small style="color: #64748b; font-size: 11px;">Cari dan pilih seminar, workshop, atau kegiatan komunitas yang ingin kamu ikuti.</small>
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 12px; align-items: flex-start;">
+            <span style="background: #eeeaff; color: #5746c8; width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; font-weight: 800; flex-shrink: 0;">2</span>
+            <div>
+              <strong style="display: block; font-size: 13px;">Isi Data Pemesanan</strong>
+              <small style="color: #64748b; font-size: 11px;">Klik "Pesan Tiket", lalu isi nama lengkap, email aktif, dan jumlah tiket yang dibutuhkan.</small>
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 12px; align-items: flex-start;">
+            <span style="background: #eeeaff; color: #5746c8; width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; font-weight: 800; flex-shrink: 0;">3</span>
+            <div>
+              <strong style="display: block; font-size: 13px;">Dapatkan E-Tiket & QR Code</strong>
+              <small style="color: #64748b; font-size: 11px;">Tiket dan kode booking unik akan otomatis tersimpan di menu <b>Tiket Saya</b>.</small>
+            </div>
+          </div>
+        </div>
+
+        <button class="btn btn-primary full-width" type="button" data-close="faqModal" style="margin-top: 20px;">
+          Paham, Mengerti!
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+</body>
+</html>

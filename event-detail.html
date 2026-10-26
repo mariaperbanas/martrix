@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Detail Acara — Perbanas Event</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Icons & Stylesheet -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+
+  <!-- JavaScript -->
+  <script src="event-detail.js" defer></script>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="wrap nav">
+      <a class="logo" href="index.html">
+        <i class="fa-solid fa-ticket"></i>
+        <span>Perbanas Event</span>
+      </a>
+      <nav class="navlinks">
+        <a href="index.html#events">Jelajahi Acara</a>
+        <a href="index.html#categories">Kategori</a>
+        <a href="index.html#organizer">Untuk Organizer</a>
+      </nav>
+      <div class="navactions">
+        <a class="btn btn-light" href="index.html#events">
+          <i class="fa-solid fa-arrow-left"></i> Kembali ke Acara
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="wrap detail-page">
+    <div class="breadcrumbs">
+      <a href="index.html">Beranda</a> / 
+      <a href="index.html#events">Acara</a> / 
+      <span id="crumbTitle">Detail Acara</span>
+    </div>
+
+    <section class="detail-layout">
+      <!-- Main Detail Content -->
+      <div>
+        <div class="detail-cover">
+          <img id="detailImage" src="" alt="Sampul Acara">
+          <span id="detailCategory" class="event-badge"></span>
+        </div>
+
+        <article class="detail-card">
+          <span class="eyebrow">INFORMASI ACARA</span>
+          <h1 id="detailTitle">Memuat acara...</h1>
+          <p id="detailDescription"></p>
+
+          <div class="detail-meta">
+            <div>
+              <i class="fa-regular fa-calendar"></i>
+              <span>
+                <small>Tanggal</small>
+                <strong id="detailDate"></strong>
+              </span>
+            </div>
+            <div>
+              <i class="fa-regular fa-clock"></i>
+              <span>
+                <small>Waktu</small>
+                <strong id="detailTime"></strong>
+              </span>
+            </div>
+            <div>
+              <i class="fa-solid fa-location-dot"></i>
+              <span>
+                <small>Lokasi</small>
+                <strong id="detailLocation"></strong>
+              </span>
+            </div>
+          </div>
+
+          <h2>Informasi lokasi</h2>
+          <p id="detailAddress"></p>
+          <a id="mapsLink" class="map-link" target="_blank" rel="noopener noreferrer" href="#">
+            <i class="fa-solid fa-map-location-dot"></i> Buka lokasi di Google Maps
+          </a>
+
+          <h2 class="benefits-heading">Tentang acara</h2>
+          <p id="detailAbout"></p>
+        </article>
+      </div>
+
+      <!-- Booking Card Sidebar -->
+      <aside class="booking-card">
+        <span class="eyebrow">TIKET ACARA</span>
+        <h2>Amankan tempatmu</h2>
+        <p class="price-caption">Harga tiket</p>
+        <strong id="detailPrice" class="detail-price"></strong>
+        
+        <p class="demo-note">
+          Pemesanan di website ini merupakan simulasi dan belum memproses pembayaran sungguhan.
+        </p>
+
+        <button id="bookFromDetail" class="btn btn-primary full-width" type="button">
+          <i class="fa-solid fa-ticket"></i> Pesan Tiket
+        </button>
+        <a href="index.html#events" class="btn btn-light full-width back-to-list">Lihat Acara Lain</a>
+      </aside>
+    </section>
+
+    <!-- Related Events Section -->
+    <section class="section related-section">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow">JELAJAHI LAGI</span>
+          <h2>Acara lainnya</h2>
+          <p>Temukan acara menarik lainnya di Perbanas Event.</p>
+        </div>
+      </div>
+      <div id="relatedEvents" class="events related-events"></div>
+    </section>
+  </main>
+
+  <!-- Modals -->
+  <div class="overlay" id="checkoutModal" role="dialog" aria-modal="true" aria-labelledby="checkoutModalTitle" hidden>
+    <div class="modal">
+      <div class="modal-head">
+        <h2 id="checkoutModalTitle">Pesan Tiket Acara</h2>
+        <button class="close" id="closeCheckout" aria-label="Tutup">&times;</button>
+      </div>
+      <div class="modal-content" id="checkoutContent"></div>
+    </div>
+  </div>
+
+  <div class="overlay" id="ticketsModal" role="dialog" aria-modal="true" aria-labelledby="ticketsModalTitle" hidden>
+    <div class="modal">
+      <div class="modal-head">
+        <h2 id="ticketsModalTitle">Konfirmasi Pesanan</h2>
+        <button class="close" id="closeTickets" aria-label="Tutup">&times;</button>
+      </div>
+      <div class="modal-content" id="ticketsContent"></div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="wrap copyright">
+      © 2026 Perbanas Event — Kelompok 12 Martrix (Perbanas Institute)
+    </div>
+  </footer>
+
+</body>
+</html>
